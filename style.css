@@ -1,0 +1,864 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --red: #dc143c;
+    --dark-red: #b01030;
+    --black: #0a0a0a;
+    --dark-gray: #1a1a1a;
+    --white: #ffffff;
+    --light-gray: #f8f8f8;
+    --text-gray: #555555;
+    --border-gray: #e0e0e0;
+}
+
+/* ============================================
+   ACCESSIBILITY - Respect Motion Preferences
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--dark-gray);
+    line-height: 1.6;
+    background: var(--white);
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ============================================
+   PAGE LOADER - Kerala Bhoomi Style
+   ============================================ */
+.page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.page-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-container {
+    text-align: center;
+    max-width: 300px;
+}
+
+.loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(220, 20, 60, 0.1);
+    border-top: 4px solid var(--red);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(220, 20, 60, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.loader-progress {
+    width: 0%;
+    height: 100%;
+    background: var(--red);
+    animation: progress 2s ease-in-out;
+}
+
+@keyframes progress {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+.loader-text {
+    font-size: 14px;
+    color: var(--text-gray);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   FADE-IN ON SCROLL - Government Style
+   ============================================ */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+header {
+    background: var(--white);
+    padding: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: box-shadow 0.3s ease;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: var(--red);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+    background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
+    color: var(--white);
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(220, 20, 60, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 52px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    line-height: 1.15;
+    letter-spacing: -1px;
+}
+
+.hero .highlight {
+    color: var(--red);
+}
+
+.hero p {
+    font-size: 22px;
+    margin-bottom: 48px;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.6;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   BUTTON STYLES - Kerala Bhoomi Style
+   ============================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* WhatsApp Button */
+.btn-whatsapp {
+    background: var(--red);
+    color: var(--white);
+    box-shadow: 0 4px 14px rgba(220, 20, 60, 0.25);
+}
+
+.btn-whatsapp:hover {
+    background: var(--dark-red);
+}
+
+/* Telegram Button */
+.btn-telegram {
+    background: var(--white);
+    color: var(--black);
+    border: 2px solid var(--white);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.1s ease;
+}
+
+.btn-telegram:hover {
+    background: transparent;
+    color: var(--white);
+    border-color: var(--white);
+}
+
+/* IB Buttons */
+.btn-ib {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: var(--white);
+    box-shadow: 0 4px 14px rgba(44, 62, 80, 0.25);
+}
+
+.btn-ib:hover {
+    background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+}
+
+.btn-master-ib {
+    background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+    color: var(--white);
+    box-shadow: 0 4px 14px rgba(139, 69, 19, 0.25);
+}
+
+.btn-master-ib:hover {
+    background: linear-gradient(135deg, #6b3410 0%, #8b4513 100%);
+}
+
+/* ============================================
+   SECTION STYLES
+   ============================================ */
+section {
+    padding: 90px 0;
+}
+
+.section-title {
+    font-size: 42px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    color: var(--black);
+    letter-spacing: -0.5px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 19px;
+    color: var(--text-gray);
+    margin-bottom: 64px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================
+   ABOUT SECTION
+   ============================================ */
+.about {
+    background: var(--light-gray);
+}
+
+.about-content {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.about-content p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text-gray);
+    margin-bottom: 24px;
+}
+
+.about-content strong {
+    color: var(--black);
+    font-weight: 600;
+}
+
+/* ============================================
+   SERVICES SECTION
+   ============================================ */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+    margin-top: 48px;
+}
+
+.service-card {
+    background: var(--white);
+    padding: 28px 24px;
+    border-radius: 12px;
+    border: 2px solid var(--border-gray);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    border-color: var(--red);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+}
+
+.service-card.premium {
+    background: linear-gradient(145deg, #ffffff 0%, #fcfcfc 100%);
+    border: 2.5px solid var(--red);
+    box-shadow: 0 6px 24px rgba(220, 20, 60, 0.12);
+}
+
+.service-card.premium::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, var(--red), var(--dark-red));
+    border-radius: 12px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.service-card.premium:hover::before {
+    opacity: 0.1;
+}
+
+.premium-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, var(--red) 0%, var(--dark-red) 100%);
+    color: var(--white);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 12px rgba(220, 20, 60, 0.3);
+}
+
+.service-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--red);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.08);
+}
+
+.service-card.premium .service-icon {
+    background: linear-gradient(135deg, var(--red) 0%, var(--dark-red) 100%);
+    box-shadow: 0 4px 16px rgba(220, 20, 60, 0.3);
+}
+
+.service-card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: var(--black);
+    font-weight: 700;
+}
+
+.service-card.premium h3 {
+    font-size: 21px;
+}
+
+.service-card > p {
+    font-size: 14.5px;
+    color: var(--text-gray);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex-grow: 1;
+}
+
+.signal-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 2px solid rgba(220, 20, 60, 0.1);
+}
+
+.signal-feature {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    color: #444;
+}
+
+.signal-feature-icon {
+    width: 16px;
+    height: 16px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.premium-stats {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 12px 8px;
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.05) 0%, rgba(220, 20, 60, 0.08) 100%);
+    border-radius: 8px;
+    border: 1px solid rgba(220, 20, 60, 0.15);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-item:hover {
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.08) 0%, rgba(220, 20, 60, 0.12) 100%);
+    border-color: rgba(220, 20, 60, 0.3);
+}
+
+.stat-number {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 3px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--text-gray);
+    font-weight: 600;
+}
+
+/* ============================================
+   WHY CHOOSE SECTION
+   ============================================ */
+.why-choose {
+    background: var(--light-gray);
+}
+
+.features-list {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    gap: 24px;
+}
+
+.feature-item {
+    background: var(--white);
+    padding: 32px;
+    border-radius: 10px;
+    border-left: 4px solid var(--red);
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+
+.feature-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.feature-content h4 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: var(--black);
+    font-weight: 600;
+}
+
+.feature-content p {
+    font-size: 16px;
+    color: var(--text-gray);
+    line-height: 1.7;
+}
+
+/* ============================================
+   CONTACT SECTION
+   ============================================ */
+.contact-section {
+    background: var(--black);
+    color: var(--white);
+    text-align: center;
+}
+
+.contact-section .section-title {
+    color: var(--white);
+}
+
+.contact-section .section-subtitle {
+    color: rgba(255,255,255,0.8);
+}
+
+.contact-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto 80px;
+}
+
+.contact-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 48px 36px;
+    border-radius: 12px;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(220, 20, 60, 0.5);
+    transform: translateY(-4px);
+}
+
+.contact-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover .contact-icon {
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px rgba(220, 20, 60, 0.4);
+}
+
+.contact-icon svg {
+    width: 42px;
+    height: 42px;
+}
+
+.contact-card h3 {
+    font-size: 24px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.contact-card p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 28px;
+    line-height: 1.6;
+}
+
+/* ============================================
+   IB REGISTRATION SECTION
+   ============================================ */
+.ib-registration-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 0 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.ib-section-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--white);
+}
+
+.ib-section-subtitle {
+    font-size: 17px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 40px;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ib-buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.btn-ib-large,
+.btn-master-ib-large {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 32px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+}
+
+.btn-ib-large:hover,
+.btn-master-ib-large:hover {
+    transform: translateY(-4px);
+}
+
+.btn-ib-large:active,
+.btn-master-ib-large:active {
+    transform: translateY(-2px);
+}
+
+.btn-ib-large {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: var(--white);
+    box-shadow: 0 6px 24px rgba(44, 62, 80, 0.3);
+}
+
+.btn-ib-large:hover {
+    box-shadow: 0 12px 36px rgba(44, 62, 80, 0.4);
+}
+
+.btn-master-ib-large {
+    background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+    color: var(--white);
+    box-shadow: 0 6px 24px rgba(139, 69, 19, 0.3);
+}
+
+.btn-master-ib-large:hover {
+    box-shadow: 0 12px 36px rgba(139, 69, 19, 0.4);
+}
+
+.btn-ib-large svg,
+.btn-master-ib-large svg {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.btn-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.btn-subtitle {
+    font-size: 14px;
+    opacity: 0.85;
+    line-height: 1.4;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+    background: var(--dark-gray);
+    color: rgba(255,255,255,0.7);
+    padding: 56px 24px 32px;
+}
+
+.disclaimer {
+    background: rgba(220, 20, 60, 0.12);
+    border: 1px solid rgba(220, 20, 60, 0.3);
+    padding: 28px;
+    border-radius: 8px;
+    margin-bottom: 32px;
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.disclaimer h4 {
+    color: var(--red);
+    font-size: 18px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.disclaimer p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-bottom p {
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 18px;
+    }
+
+    .section-title {
+        font-size: 32px;
+    }
+
+    .section-subtitle {
+        font-size: 17px;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .btn {
+        justify-content: center;
+        padding: 14px 24px;
+        font-size: 15px;
+    }
+
+    .services-grid,
+    .contact-cards,
+    .ib-buttons-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .signal-features {
+        grid-template-columns: 1fr;
+    }
+
+    .premium-badge {
+        top: 12px;
+        right: 12px;
+        font-size: 10px;
+        padding: 5px 12px;
+    }
+
+    .ib-section-title {
+        font-size: 26px;
+    }
+
+    .ib-section-subtitle {
+        font-size: 15px;
+    }
+
+    .btn-ib-large,
+    .btn-master-ib-large {
+        flex-direction: column;
+        text-align: center;
+        padding: 28px 24px;
+    }
+
+    .btn-ib-large svg,
+    .btn-master-ib-large svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .btn-title {
+        font-size: 18px;
+    }
+
+    .btn-subtitle {
+        font-size: 13px;
+    }
+}

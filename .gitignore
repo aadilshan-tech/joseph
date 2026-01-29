@@ -1,0 +1,23 @@
+# Vercel
+.vercel
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Optional: backup files
+*.backup
+*.bak
+*.tmp
